@@ -35,12 +35,12 @@ body {
 
 main {
   padding: 10px;
-  /* Safari and iOS didn't work with vh */
-  /* height: 80vh; */
+  height: 80vh;
+  /* Safari and iOS didn't work with "height: 80vh;" and "display: flex;" so making this "display: block" */
+  display: block;
+  flex-direction: column;
   margin: 10vh 0 10vh;
   overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
 }
 
 main::-webkit-scrollbar {
