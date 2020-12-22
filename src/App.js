@@ -24,7 +24,15 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>🔥💬 COF firechat</h1>
+        <h1>
+          <span role="img" aria-label="fire">
+            🔥
+          </span>
+          <span role="img" aria-label="chat">
+            💬
+          </span>
+          COF firechat
+        </h1>
         <SignOut />
       </header>
 
@@ -70,12 +78,13 @@ function ChatRoom() {
 
   const sendMessage = async (e) => {
     e.preventDefault()
-    const { uid, photoURL } = auth.currentUser
+    const { uid, photoURL, displayName } = auth.currentUser
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL,
+      displayName,
       timestamp: Date.now(),
     })
     setFormValue("")
@@ -87,7 +96,6 @@ function ChatRoom() {
       <main>
         {messages &&
           messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-
         <span ref={dummy}></span>
       </main>
 
@@ -97,9 +105,10 @@ function ChatRoom() {
           onChange={(e) => setFormValue(e.target.value)}
           placeholder="say something nice"
         />
-
         <button type="submit" disabled={!formValue}>
-          🕊️
+          <span role="img" aria-label="send">
+            🕊️
+          </span>
         </button>
       </form>
     </>
@@ -107,14 +116,14 @@ function ChatRoom() {
 }
 
 function ChatMessage(props) {
-  const { text, uid, photoURL, timestamp } = props.message
+  const { text, uid, photoURL, timestamp, displayName } = props.message
 
   const time = new Intl.DateTimeFormat("en-US", {
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
+    //second: "2-digit",
   }).format(timestamp)
 
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received"
@@ -126,17 +135,12 @@ function ChatMessage(props) {
           src={
             photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"
           }
+          alt=""
         />
-        <p>{text}</p>&nbsp;&nbsp;
-        <span
-          style={{
-            backgroundColor: "black",
-            color: "white",
-            fontSize: ".7rem",
-          }}
-        >
-          {time}
-        </span>
+        <p>{text}&nbsp;&nbsp;</p>
+      </div>
+      <div className="whowhen">
+        {displayName} {time}
       </div>
     </>
   )
