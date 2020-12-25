@@ -1,3 +1,23 @@
+- firebase.json example: 
+{
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
+
+
+- rules that didn't work / does work:
 //doesn't work: 
 rules_version = '2';
 service cloud-firestore {

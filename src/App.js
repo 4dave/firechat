@@ -139,7 +139,7 @@ function ChatMessage(props) {
         />
         <p>{text}&nbsp;&nbsp;</p>
       </div>
-      <div className="whowhen">
+      <div className={`whowhen message ${messageClass}`}>
         {displayName} {time}
       </div>
     </>

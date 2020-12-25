@@ -7,9 +7,9 @@ body {
   /* background-color: rgb(40, 37, 53); */
   color: rgb(144, 144, 144);
   font-size: .7rem;
-  text-align: end;
-  display: flex;
-  flex-direction: row-reverse;
+  /* text-align: end; */
+  /* display: flex; */
+  /* flex-direction: row-reverse; */
   text-transform: lowercase;
   padding-bottom: 2em;
 }
