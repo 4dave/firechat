@@ -101,12 +101,9 @@ function ChatRoom() {
 
       <form onSubmit={sendMessage}>
         <input
-          // autofocus
-          type="text"
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
           placeholder="say something nice"
-          style={{ overflowWrap: "break-word" }}
         />
         <button type="submit" disabled={!formValue}>
           <span role="img" aria-label="send">
