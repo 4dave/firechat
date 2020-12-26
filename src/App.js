@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>
+        <h2>
           <span role="img" aria-label="fire">
             🔥
           </span>
@@ -32,7 +32,7 @@ function App() {
             💬
           </span>
           COF firechat
-        </h1>
+        </h2>
         <SignOut />
       </header>
 
@@ -100,11 +100,21 @@ function ChatRoom() {
       </main>
 
       <form onSubmit={sendMessage}>
-        <input
+        <textarea
+          type="text"
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
           placeholder="say something nice"
-        />
+          wrap="hard"
+          cols="20"
+        >
+          {/* <input
+            type="text"
+            value={formValue}
+            onChange={(e) => setFormValue(e.target.value)}
+            placeholder="say something nice"
+          /> */}
+        </textarea>
         <button type="submit" disabled={!formValue}>
           <span role="img" aria-label="send">
             🕊️
