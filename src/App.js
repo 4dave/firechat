@@ -31,7 +31,7 @@ function App() {
           <span role="img" aria-label="chat">
             💬
           </span>
-          COF firechat
+          Firechat
         </h2>
         <SignOut />
       </header>
@@ -69,12 +69,18 @@ function SignOut() {
 
 function ChatRoom() {
   const dummy = useRef()
-  const messagesRef = firestore.collection("messages")
+  const messagesRef = firestore.collection("tgtdemo")
   const query = messagesRef.orderBy("createdAt").limit(500)
 
   const [messages] = useCollectionData(query, { idField: "id" })
 
   const [formValue, setFormValue] = useState("")
+
+  const deleteMessage = (uid) => {
+    if (window.confirm("Are you sure to delete this record?")) {
+      firebase.firestore().collection("messages").doc(uid).delete()
+    }
+  }
 
   const sendMessage = async (e) => {
     e.preventDefault()
@@ -95,7 +101,13 @@ function ChatRoom() {
     <>
       <main>
         {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+          messages.map((msg) => (
+            <ChatMessage
+              key={msg.id}
+              message={msg}
+              deleteMessage={deleteMessage}
+            />
+          ))}
         <span ref={dummy}></span>
       </main>
 
@@ -141,13 +153,14 @@ function ChatMessage(props) {
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <img
-          src={
-            photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"
-          }
-          alt=""
-        />
-        <p>{text}&nbsp;&nbsp;</p>
+        <img src={photoURL || "/avatar-placeholder.png"} alt="" />
+        <p>
+          {text}&nbsp;&nbsp;
+          {/* <button
+            className="delete"
+            onClick={() => props.deleteMessage(uid)}
+          ></button> */}
+        </p>
       </div>
       <div className={`whowhen message ${messageClass}`}>
         {displayName} {time}

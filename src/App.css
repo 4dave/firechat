@@ -108,6 +108,18 @@ textarea {
   resize: none;
 }
 
+.delete {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  /* height: 5px;
+  width: 5px; */
+  padding: 8px !important;
+  background-color: transparent !important;
+  background-image: url(/delete.png);
+  background-size: contain;
+}
+
 button {
   background-color: #282c34; /* Green */
   border: none;
