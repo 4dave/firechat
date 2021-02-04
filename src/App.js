@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import "./App.css"
 import firebase from "firebase/app"
 import "firebase/firestore"
@@ -68,7 +68,6 @@ function SignOut() {
 }
 
 function ChatRoom() {
-  const dummy = useRef()
   const messagesRef = firestore.collection("tgtdemo")
   const query = messagesRef.orderBy("createdAt").limit(500)
 
@@ -82,6 +81,15 @@ function ChatRoom() {
     }
   }
 
+  // scroll to bottom when [messages] is updated
+  const messagesEndRef = useRef()
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
   const sendMessage = async (e) => {
     e.preventDefault()
     const { uid, photoURL, displayName } = auth.currentUser
@@ -94,7 +102,6 @@ function ChatRoom() {
       timestamp: Date.now(),
     })
     setFormValue("")
-    dummy.current.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
@@ -108,7 +115,7 @@ function ChatRoom() {
               deleteMessage={deleteMessage}
             />
           ))}
-        <span ref={dummy}></span>
+        <div ref={messagesEndRef} />
       </main>
 
       <form onSubmit={sendMessage}>
