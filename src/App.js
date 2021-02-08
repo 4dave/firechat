@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from "react"
 import "./App.css"
-import firebase from "firebase/app"
-import "firebase/firestore"
-import "firebase/auth"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useCollectionData } from "react-firebase-hooks/firestore"
+import firebase from "firebase/app" //firebase SDK
+import "firebase/firestore" //firestore DB
+import "firebase/auth" //firebase authentication
+import { useAuthState } from "react-firebase-hooks/auth" //firebase hook for auth with user object (userID/email/Name)
+import { useCollectionData } from "react-firebase-hooks/firestore" //firebase hook for firestore collection
 
+// identify the app
 firebase.initializeApp({
   apiKey: "AIzaSyAaNSGEGg_vF8wNr9SIRRnMhvQXBbRSClQ",
   authDomain: "firechat-969d9.firebaseapp.com",
@@ -21,6 +22,7 @@ const firestore = firebase.firestore()
 function App() {
   const [user] = useAuthState(auth)
 
+  //if user object exists (logged in), show ChatRoom, else show SignIn
   return (
     <div className="App">
       <header>
@@ -35,12 +37,12 @@ function App() {
         </h2>
         <SignOut />
       </header>
-
       <section>{user ? <ChatRoom /> : <SignIn />}</section>
     </div>
   )
 }
 
+//instantiate the auth provider and pass to popup
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -67,12 +69,12 @@ function SignOut() {
   )
 }
 
+//
 function ChatRoom() {
-  const messagesRef = firestore.collection("tgtdemo")
-  const query = messagesRef.orderBy("createdAt").limit(500)
-
+  const messagesRef = firestore.collection("peanuts") //reference to messages collection
+  const query = messagesRef.orderBy("createdAt").limit(500) //query documents in this collection
+  // query with useCollectionData hook to return array of objects (message)
   const [messages] = useCollectionData(query, { idField: "id" })
-
   const [formValue, setFormValue] = useState("")
 
   const deleteMessage = (uid) => {
