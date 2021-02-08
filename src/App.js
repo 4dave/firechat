@@ -71,7 +71,7 @@ function SignOut() {
 
 //
 function ChatRoom() {
-  const messagesRef = firestore.collection("peanuts") //reference to messages collection
+  const messagesRef = firestore.collection("tgtdemo") //reference to messages collection
   const query = messagesRef.orderBy("createdAt").limit(500) //query documents in this collection
   // query with useCollectionData hook to return array of objects (message)
   const [messages] = useCollectionData(query, { idField: "id" })
